@@ -1,0 +1,36 @@
+{
+  "name": "nestjs-generator",
+  "version": "0.0.1",
+  "description": "Generator for Nest.js",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "clean": "rimraf dist/",
+    "copy-files": "copyfiles -a -u 1 \"src/generators/**/templates/**/*\" dist/src/",
+    "build": "npm run clean && tsc && tsc-alias && npm run copy-files",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "nest.js",
+    "scaffold",
+    "generator"
+  ],
+  "author": "Vyacheslav Diakov <vyacheslav08071996@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/ejs": "^3.1.2",
+    "@types/minimist": "^1.2.2",
+    "@types/node": "^18.15.11",
+    "@types/prompts": "^2.4.4",
+    "chalk": "^5.2.0",
+    "copyfiles": "^2.4.1",
+    "ejs": "^3.1.9",
+    "minimist": "^1.2.8",
+    "ora": "^6.3.0",
+    "prettier": "^2.8.7",
+    "prompts": "^2.4.2",
+    "rimraf": "^4.4.1",
+    "tsc-alias": "^1.8.5",
+    "typescript": "^5.0.4"
+  }
+}
