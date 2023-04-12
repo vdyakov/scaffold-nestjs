@@ -1,12 +1,13 @@
 import minimist from 'minimist';
 import { PromptObject } from 'prompts';
-import Questions from '@/lib/builders/questions.js';
 import { canSkipEmptying } from '@/utils/file-system.js';
 import { isValidPackageName } from '@/utils/validators.js';
 import { toValidPackageName } from '@/utils/formatter.js';
+import Questionnaire from '@/lib/questionnaire.js';
+import { CommonAnswers } from '@/generators/base/types';
 
-export default class AppQuestions extends Questions {
-  get questions(): PromptObject[] {
+export default class BaseQuestionnaire extends Questionnaire<CommonAnswers> {
+  protected get questions(): PromptObject[] {
     const argv = minimist(process.argv.slice(2), {
       string: ['_'],
       boolean: true,

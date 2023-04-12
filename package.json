@@ -6,14 +6,16 @@
   "main": "index.ts",
   "scripts": {
     "clean": "rimraf dist/",
-    "copy-files": "copyfiles -a -u 1 \"src/generators/**/templates/**/*\" dist/src/",
+    "copy-files": "copyfiles -a -u 1 \"src/generators/**/generator/templates/**/*\" dist/src/",
     "build": "npm run clean && tsc && tsc-alias && npm run copy-files",
     "generate": "node dist/index.js"
   },
   "keywords": [
     "nest.js",
+    "node.js",
     "scaffold",
-    "generator"
+    "generator",
+    "boilerplate"
   ],
   "author": "Vyacheslav Diakov <vyacheslav08071996@gmail.com>",
   "license": "MIT",

@@ -1,15 +1,16 @@
-#!/usr/bin/env node
-
-import Builder from '@/lib/builders/builder.js';
-import AppGenerator from '@/generators/app/index.js';
+import BaseModule from '@/generators/base/index.js';
+import ModuleCollector from '@/lib/collectors/module-collector.js';
+import ModuleCollectorHandler from '@/lib/collectors/module-collector-handler.js';
 
 async function init() {
-  const builder = new Builder();
-  const appGenerator = new AppGenerator();
+  const collector = new ModuleCollector();
+  const collectorHandler = new ModuleCollectorHandler();
 
-  builder.addGenerator(appGenerator);
+  const baseModule = new BaseModule();
 
-  await builder.build();
+  collector.register(baseModule);
+
+  await collectorHandler.handle(collector);
 }
 
 init().catch((e) => {
