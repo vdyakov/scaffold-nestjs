@@ -1,9 +1,9 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { fileURLToPath } from 'url';
-import { CommonAnswers } from '@/types/common';
 import { clearDir } from '@/utils/file-system.js';
 import renderTemplate from '@/utils/render-template.js';
+import { CommonAnswers } from '@/generators/base/types';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -23,8 +23,6 @@ export default function (answers: CommonAnswers) {
   } = answers;
 
   const root = destinationPath(projectName);
-
-  console.log(`\nScaffolding project in ${root}...`);
 
   if (fs.existsSync(root) && shouldOverwrite) {
     clearDir(root);

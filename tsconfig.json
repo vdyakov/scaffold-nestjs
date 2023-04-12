@@ -27,6 +27,6 @@
   "include": ["index.ts", "src/**/*"],
   "exclude": [
     "node_modules",
-    "src/generators/*/templates"
+    "src/generators/*/generator/templates"
   ]
 }
