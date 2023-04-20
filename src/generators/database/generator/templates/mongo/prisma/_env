@@ -1,0 +1,1 @@
+DATABASE_URL="mongodb://test:test@localhost:27017/test"

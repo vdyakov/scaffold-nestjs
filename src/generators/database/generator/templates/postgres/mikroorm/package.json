@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@mikro-orm/cli": "^5.6.16",
+    "@mikro-orm/core": "^5.6.16",
+    "@mikro-orm/nestjs": "^5.1.8",
+    "@mikro-orm/postgresql": "^5.6.16"
+  }
+}
