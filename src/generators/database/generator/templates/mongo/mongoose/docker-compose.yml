@@ -1,0 +1,30 @@
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    command: npm run start:dev
+    ports:
+      - ${SERVER_PORT}:3000
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6.0
+    restart: always
+    volumes:
+      - data:/data/db
+    ports:
+      - "28017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME:-test}
+      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD:-secret}
+      MONGODB_DATABASE: ${DATABASE_NAME:-test}
+
+volumes:
+  data:

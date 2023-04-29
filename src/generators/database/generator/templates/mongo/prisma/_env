@@ -1,1 +1,5 @@
-DATABASE_URL="mongodb://test:test@localhost:27017/test"
+DATABASE_USERNAME=test
+DATABASE_PASSWORD=secret
+DATABASE_NAME=test
+
+DATABASE_URL="mongodb://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@mongo:27017/${DATABASE_NAME}?authSource=admin"

@@ -32,7 +32,7 @@ Run your generated application:
 
 ```bash
 cd <project name>
-npm run start:dev
+docker-compose up -d
 ```
 
 ## Links

@@ -1,1 +1,5 @@
-DATABASE_URL="postgresql://test:test@localhost:5432/test"
+DATABASE_USERNAME=test
+DATABASE_PASSWORD=secret
+DATABASE_NAME=test
+
+DATABASE_URL="postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@postgres:5432/${DATABASE_NAME}"
