@@ -58,10 +58,12 @@ export default function (answers: ServicesAnswers) {
     );
   }
 
-  renderModule(
-    templatePath('base/shared/shared.module.ejs'),
-    destinationPath(projectName, 'src/shared'),
-    'shared.module.ts',
-    { providerImports, providers }
-  )
+  if (providers.length !== 0) {
+    renderModule(
+      templatePath('base/shared/shared.module.ejs'),
+      destinationPath(projectName, 'src/shared'),
+      'shared.module.ts',
+      { providerImports, providers }
+    );
+  }
 };

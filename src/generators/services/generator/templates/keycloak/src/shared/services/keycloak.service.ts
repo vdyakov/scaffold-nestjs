@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import KeycloakClient from '@keycloak/keycloak-admin-client';
 import UserRepresentation from '@keycloak/keycloak-admin-client/lib/defs/userRepresentation';
+import { ApiConfigService } from '@/shared/services/api-config.service';
 
 @Injectable()
 export class KeycloakService {
   private readonly keycloak: KeycloakClient;
 
   async constructor(
-    public configService: ConfigService,
+    public configService: ApiConfigService,
   ) {
-    const baseUrl: string = configService.get<string>('KEYCLOAK_URL') || '';
-    const realmName: string = configService.get<string>('KEYCLOAK_REALM') || '';
-    const clientId: string = configService.get<string>('KEYCLOAK_CLIENT_ID') || '';
-    const username: string = configService.get<string>('KEYCLOAK_API_USERNAME') || '';
-    const password: string = configService.get<string>('KEYCLOAK_API_PASSWORD') || '';
+    const baseUrl: string = configService.getString('KEYCLOAK_URL');
+    const realmName: string = configService.getString('KEYCLOAK_REALM');
+    const clientId: string = configService.getString('KEYCLOAK_CLIENT_ID');
+    const username: string = configService.getString('KEYCLOAK_API_USERNAME');
+    const password: string = configService.getString('KEYCLOAK_API_PASSWORD');
 
     this.keycloak = new KeycloakClient({
       baseUrl,
