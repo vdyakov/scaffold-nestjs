@@ -1,0 +1,8 @@
+### MinIO
+MINIO_ENDPOINT='localhost'
+MINIO_PORT=9000
+
+MINIO_ACCESS_KEY=<my_access_key>
+MINIO_SECRET_KEY=<my_secret_key>
+MINIO_USE_SSL=false
+MINIO_BUCKET_NAME=<my_bucket_name>
