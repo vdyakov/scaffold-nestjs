@@ -11,8 +11,8 @@ export default class BaseGenerator extends Generator<CommonAnswers> {
     await generatorSteps.writing(answers);
   }
 
-  protected async install(answers: CommonAnswers) {
-    await generatorSteps.install(answers);
+  protected async install() {
+    await generatorSteps.install();
   }
 
   protected end() {

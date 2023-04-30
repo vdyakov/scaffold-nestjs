@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@keycloak/keycloak-admin-client": "^21.1.1"
+  }
+}

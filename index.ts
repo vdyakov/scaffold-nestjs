@@ -1,5 +1,6 @@
 import BaseModule from '@/generators/base/index.js';
 import DatabaseModule from '@/generators/database/index.js';
+import ServicesModule from '@/generators/services/index.js';
 import ModuleCollector from '@/lib/collectors/module-collector.js';
 import ModuleCollectorHandler from '@/lib/collectors/module-collector-handler.js';
 
@@ -9,9 +10,11 @@ async function init() {
 
   const baseModule = new BaseModule();
   const databaseModule = new DatabaseModule();
+  const servicesModule = new ServicesModule();
 
   collector.register(baseModule);
   collector.register(databaseModule);
+  collector.register(servicesModule);
 
   await collectorHandler.handle(collector);
 }

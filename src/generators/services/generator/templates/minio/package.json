@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "minio": "^7.1.0"
+  },
+  "devDependencies": {
+    "@types/minio": "^7.0.18",
+    "@types/multer": "^1.4.7"
+  }
+}
