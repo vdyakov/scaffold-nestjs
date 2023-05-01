@@ -17,6 +17,8 @@ export default function (answers: AuthAnswers) {
   const {
     projectName,
     needAuth = true,
+    orm = '',
+    database = '',
     auth = 'jwt',
   } = answers;
 
@@ -25,7 +27,13 @@ export default function (answers: AuthAnswers) {
   }
 
   renderTemplate(
-    templatePath(auth),
+    templatePath(orm, auth),
+    destinationPath(projectName),
+    answers,
+  );
+
+  renderTemplate(
+    templatePath('docker', database),
     destinationPath(projectName),
     answers,
   );

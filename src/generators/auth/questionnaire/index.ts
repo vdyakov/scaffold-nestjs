@@ -24,7 +24,6 @@ export default class AuthQuestionnaire extends Questionnaire<AuthAnswers> {
         message: 'Select auth variant:',
         choices: [
           { title: 'JWT', value: 'jwt' },
-          { title: 'Keycloak', value: 'keycloak' },
         ],
         initial: 0,
       },
