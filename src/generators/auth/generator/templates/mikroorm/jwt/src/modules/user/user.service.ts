@@ -1,14 +1,14 @@
 import * as bcrypt from 'bcrypt';
 
 import { Injectable } from '@nestjs/common';
-import { User } from '@/modules/user/schemas/user.schema';
+import { User } from '@/modules/user/user.entity';
 import SignupDto from '@/modules/auth/dtos/signup.dto';
 import UserRepository from '@/modules/user/user.repository';
 import UpdateUserDto from '@/modules/user/dtos/update-user.dto';
 
 @Injectable()
 export default class UserService {
-  constructor(private readonly userRepository: UserRepository) { }
+  constructor(private readonly userRepository: UserRepository) {}
 
   public async create(user: SignupDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -30,7 +30,7 @@ export default class UserService {
     return this.userRepository.findById(id);
   }
 
-  public async getAllUsers() {
+  public async getAllUsers(): Promise<User[]> {
     return this.userRepository.getAll();
   }
 }
