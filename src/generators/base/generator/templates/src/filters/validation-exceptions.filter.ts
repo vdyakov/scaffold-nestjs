@@ -16,7 +16,8 @@ export class ValidationExceptionsFilter implements ExceptionFilter {
     const ctx: HttpArgumentsHost = host.switchToHttp();
     const res = ctx.getResponse<ExpressResponse>();
 
-    const exceptionResponse: ExceptionResponse = exception.getResponse() as ExceptionResponse;
+    const exceptionResponse: ExceptionResponse =
+      exception.getResponse() as ExceptionResponse;
 
     return res.status(HttpStatus.BAD_REQUEST).json({
       error: exception.name,

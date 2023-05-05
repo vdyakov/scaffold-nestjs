@@ -19,9 +19,12 @@ import {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(new ValidationPipe({
-    exceptionFactory: (errors: ValidationError[]) => new ValidationExceptions(errors),
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      exceptionFactory: (errors: ValidationError[]) =>
+        new ValidationExceptions(errors),
+    }),
+  );
 
   app.useGlobalFilters(
     new AllExceptionsFilter(),
@@ -46,7 +49,9 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(port, async () => {
-    console.log(`The server is running on ${port} port: http://localhost:${port}/api`);
+    console.log(
+      `The server is running on ${port} port: http://localhost:${port}/api`,
+    );
   });
 }
 

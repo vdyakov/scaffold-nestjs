@@ -10,6 +10,8 @@ RUN npm ci
 
 COPY --chown=node:node . .
 
+RUN npm run prisma:generate
+
 USER node
 
 # BUILD FOR PRODUCTION
@@ -24,6 +26,7 @@ COPY --chown=node:node --from=development /app/node_modules ./node_modules
 
 COPY --chown=node:node . .
 
+RUN npm run prisma:generate
 RUN npm run build
 
 ENV NODE_ENV production

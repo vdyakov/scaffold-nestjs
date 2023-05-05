@@ -1,9 +1,5 @@
 import { Response as ExpressResponse } from 'express';
-import {
-  ArgumentsHost,
-  Catch,
-  ExceptionFilter,
-} from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 
 import { ExceptionResponse } from '@/interfaces/exception-response.interface';

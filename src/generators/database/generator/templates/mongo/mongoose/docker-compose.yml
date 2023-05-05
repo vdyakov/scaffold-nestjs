@@ -6,6 +6,7 @@ services:
       target: development
     volumes:
       - .:/app
+      - /app/node_modules
     env_file:
       - .env
     command: npm run start:dev
@@ -18,13 +19,13 @@ services:
     image: mongo:6.0
     restart: always
     volumes:
-      - data:/data/db
+      - mongo:/data/db
     ports:
-      - "28017:27017"
+      - 28017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME:-test}
       MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD:-secret}
       MONGODB_DATABASE: ${DATABASE_NAME:-test}
 
 volumes:
-  data:
+  mongo:

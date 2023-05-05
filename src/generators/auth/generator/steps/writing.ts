@@ -27,13 +27,13 @@ export default function (answers: AuthAnswers) {
   }
 
   renderTemplate(
-    templatePath(orm, auth),
+    templatePath('base', database, orm),
     destinationPath(projectName),
     answers,
   );
 
   renderTemplate(
-    templatePath('docker', database),
+    templatePath(orm, auth),
     destinationPath(projectName),
     answers,
   );

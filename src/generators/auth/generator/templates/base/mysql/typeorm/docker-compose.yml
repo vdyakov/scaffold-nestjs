@@ -6,33 +6,36 @@ services:
       target: development
     volumes:
       - .:/app
+      - /app/node_modules
     env_file:
       - .env
     command: npm run start:dev
     ports:
       - ${SERVER_PORT}:3000
     depends_on:
-      - postgres
+      - mariadb
       - redis
 
-  postgres:
-    image: postgres:15.2
+  mariadb:
+    image: mariadb:10.7
     restart: always
     volumes:
-      - data:/data/postgres
+      - mariadb:/var/lib/mysql
     ports:
-      - 5433:5432
+      - 3307:3306
     environment:
-      POSTGRES_DB: ${DATABASE_NAME:-test}
-      POSTGRES_USER: ${DATABASE_USERNAME:-test}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-secret}
-      PGDATA: /data/postgres
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD:-secret}
+      MYSQL_ROOT_USER: ${DATABASE_USERNAME:-test}
+      MYSQL_DATABASE: ${DATABASE_NAME:-test}
 
   redis:
     image: redis:6
     restart: always
+    volumes:
+      - redis:/data
     ports:
       - 6379:6379
 
 volumes:
-  data:
+  mariadb:
+  redis:

@@ -16,7 +16,8 @@ export class NotFoundExceptionFilter implements ExceptionFilter {
     const ctx: HttpArgumentsHost = host.switchToHttp();
     const res = ctx.getResponse<ExpressResponse>();
 
-    const exceptionResponse: ExceptionResponse = exception.getResponse() as ExceptionResponse;
+    const exceptionResponse: ExceptionResponse =
+      exception.getResponse() as ExceptionResponse;
 
     const errorBody = {
       error: exception.name,

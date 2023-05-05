@@ -6,32 +6,36 @@ services:
       target: development
     volumes:
       - .:/app
+      - /app/node_modules
     env_file:
       - .env
     command: npm run start:dev
     ports:
       - ${SERVER_PORT}:3000
     depends_on:
-      - mongo
+      - mariadb
       - redis
 
-  mongo:
-    image: mongo:6.0
+  mariadb:
+    image: mariadb:10.7
     restart: always
     volumes:
-      - data:/data/db
+      - mariadb:/var/lib/mysql
     ports:
-      - 28017:27017
+      - 3307:3306
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME:-test}
-      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD:-secret}
-      MONGODB_DATABASE: ${DATABASE_NAME:-test}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD:-secret}
+      MYSQL_ROOT_USER: ${DATABASE_USERNAME:-test}
+      MYSQL_DATABASE: ${DATABASE_NAME:-test}
 
   redis:
     image: redis:6
     restart: always
+    volumes:
+      - redis:/data
     ports:
       - 6379:6379
 
 volumes:
-  data:
+  mariadb:
+  redis:

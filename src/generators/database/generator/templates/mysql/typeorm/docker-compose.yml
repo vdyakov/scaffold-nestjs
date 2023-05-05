@@ -6,6 +6,7 @@ services:
       target: development
     volumes:
       - .:/app
+      - /app/node_modules
     env_file:
       - .env
     command: npm run start:dev
@@ -18,14 +19,13 @@ services:
     image: mariadb:10.7
     restart: always
     volumes:
-      - data:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     ports:
-      - "3307:3306"
+      - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD:-secret}
+      MYSQL_ROOT_USER: ${DATABASE_USERNAME:-test}
       MYSQL_DATABASE: ${DATABASE_NAME:-test}
-      MYSQL_USER: ${DATABASE_USERNAME:-test}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD:-secret}
 
 volumes:
-  data:
+  mariadb:

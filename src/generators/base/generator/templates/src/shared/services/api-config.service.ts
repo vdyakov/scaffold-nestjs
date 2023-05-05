@@ -17,13 +17,13 @@ export class ApiConfigService {
     return this.getString('NODE_ENV');
   }
 
-  public getNumber(key: string, byDefault: number = 0): number {
+  public getNumber(key: string, byDefault = 0): number {
     const value = this.get(key);
 
     return '' !== value ? Number(value) : byDefault;
   }
 
-  public getBoolean(key: string, byDefault: boolean = false): boolean {
+  public getBoolean(key: string, byDefault = false): boolean {
     const value = this.get(key);
 
     return '' !== value ? Boolean(JSON.parse(value)) : byDefault;
