@@ -32,7 +32,7 @@ import { ApiConfigService } from '@/shared/services/api-config.service';
 @ApiTags('Auth')
 @ApiExtraModels(JwtTokenDto)
 @UseInterceptors(WrapResponseInterceptor)
-@Controller()
+@Controller('auth')
 export default class AuthController {
   constructor(
     private readonly authService: AuthService,
@@ -45,7 +45,10 @@ export default class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<JwtTokenDto> {
-    const validatedUser = await this.authService.validateUser(loginDto.email, loginDto.password);
+    const validatedUser = await this.authService.validateUser(
+      loginDto.email,
+      loginDto.password,
+    );
 
     if (validatedUser === null) {
       throw new UnauthorizedException('Incorrect login or password');
@@ -68,19 +71,24 @@ export default class AuthController {
   @ApiBearerAuth()
   @Auth()
   @Post('refresh')
-  async refreshToken(@Body() refreshTokenDto: RefreshTokenDto): Promise<JwtTokenDto | never> {
-    const decodedUser = this.jwtService.decode(refreshTokenDto.refreshToken) as DecodedUser;
+  async refreshToken(
+    @Body() refreshTokenDto: RefreshTokenDto,
+  ): Promise<JwtTokenDto | never> {
+    const decodedUser = this.jwtService.decode(
+      refreshTokenDto.refreshToken,
+    ) as DecodedUser;
 
     if (!decodedUser) {
       throw new ForbiddenException('Incorrect token');
     }
 
-    const oldRefreshToken: string | null = await this.authService.getRefreshTokenByEmail(
-      decodedUser.email,
-    );
+    const oldRefreshToken: string | null =
+      await this.authService.getRefreshTokenByEmail(decodedUser.email);
 
     if (!oldRefreshToken || oldRefreshToken !== refreshTokenDto.refreshToken) {
-      throw new UnauthorizedException('Authentication credentials were missing or incorrect');
+      throw new UnauthorizedException(
+        'Authentication credentials were missing or incorrect',
+      );
     }
 
     const payload = {
@@ -106,7 +114,9 @@ export default class AuthController {
       throw new ForbiddenException('Incorrect token');
     }
 
-    const deletedTokensCount = await this.authService.deleteTokenByEmail(decodedUser.email);
+    const deletedTokensCount = await this.authService.deleteTokenByEmail(
+      decodedUser.email,
+    );
 
     if (deletedTokensCount === 0) {
       throw new NotFoundException();

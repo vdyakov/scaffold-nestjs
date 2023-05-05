@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { ApiConfigService } from '@/shared/services/api-config.service';
 import {
-  MongooseModuleFactoryOptions,
+  MongooseModuleOptions,
+  MongooseOptionsFactory,
 } from '@nestjs/mongoose/dist/interfaces/mongoose-options.interface';
 
 @Injectable()
-export class DatabaseConfigService {
+export class DatabaseConfigService implements MongooseOptionsFactory {
   constructor(private configService: ApiConfigService) {}
 
-  get config(): MongooseModuleFactoryOptions {
+  createMongooseOptions(): MongooseModuleOptions {
     return {
       uri: this.configService.getString('DATABASE_URL'),
     };

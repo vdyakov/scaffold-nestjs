@@ -32,7 +32,7 @@ import { ApiConfigService } from '@/shared/services/api-config.service';
 @ApiTags('Auth')
 @ApiExtraModels(JwtTokenDto)
 @UseInterceptors(WrapResponseInterceptor)
-@Controller()
+@Controller('auth')
 export default class AuthController {
   constructor(
     private readonly authService: AuthService,
@@ -43,7 +43,7 @@ export default class AuthController {
 
   @ApiBody({ type: LoginDto })
   @HttpCode(HttpStatus.OK)
-  @Post('auth/login')
+  @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<JwtTokenDto> {
     const validatedUser = await this.authService.validateUser(
       loginDto.email,
@@ -63,14 +63,14 @@ export default class AuthController {
 
   @ApiBody({ type: SignupDto })
   @HttpCode(HttpStatus.CREATED)
-  @Post('auth/signup')
+  @Post('signup')
   async signup(@Body() user: SignupDto): Promise<User> {
     return this.userService.create(user);
   }
 
   @ApiBearerAuth()
   @Auth()
-  @Post('auth/refresh')
+  @Post('refresh')
   async refreshToken(
     @Body() refreshTokenDto: RefreshTokenDto,
   ): Promise<JwtTokenDto | never> {
@@ -102,7 +102,7 @@ export default class AuthController {
 
   @ApiBearerAuth()
   @Auth()
-  @Post('auth/logout')
+  @Post('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(@AuthBearer() token: string): Promise<void> {
     const decodedUser: DecodedUser | null = await this.authService.verifyToken(

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { Request } from 'express';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -8,12 +8,13 @@ import { UserDocument } from '@/modules/user/schemas/user.schema';
 
 @Injectable()
 export default class RolesGuard implements CanActivate {
-  constructor(
-    private reflector: Reflector,
-  ) {}
+  constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const roles = this.reflector.get<RolesEnum[]>('roles', context.getHandler());
+    const roles = this.reflector.get<RolesEnum[]>(
+      'roles',
+      context.getHandler(),
+    );
 
     if (_.isEmpty(roles)) {
       return true;
@@ -22,6 +23,8 @@ export default class RolesGuard implements CanActivate {
     const request: Request = context.switchToHttp().getRequest();
     const user = request.user as UserDocument;
 
-    return roles.some((role: RolesEnum) => user.roles.includes(role as RolesEnum));
+    return roles.some((role: RolesEnum) =>
+      user.roles.includes(role as RolesEnum),
+    );
   }
 }

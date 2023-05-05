@@ -1,13 +1,5 @@
-import {
-  Controller,
-  Get,
-  UseInterceptors,
-} from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiExtraModels,
-  ApiTags,
-} from '@nestjs/swagger';
+import { Controller, Get, UseInterceptors } from '@nestjs/common';
+import { ApiBearerAuth, ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import { User } from '@/modules/user/schemas/user.schema';
 import Auth from '@/decorators/auth.decorator';
 import UserService from '@/modules/user/user.service';
@@ -19,9 +11,9 @@ import WrapResponseInterceptor from '@/interceptors/wrap-response.interceptor';
 @ApiBearerAuth()
 @ApiExtraModels(User)
 @UseInterceptors(WrapResponseInterceptor)
-@Controller()
+@Controller('user')
 export default class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   @Auth()

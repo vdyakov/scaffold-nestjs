@@ -5,9 +5,12 @@ import { v4 as uuid } from 'uuid';
 
 @Schema()
 export class User {
-  @Prop({ type: String, default: function genUUID() {
-    return uuid();
-  }})
+  @Prop({
+    type: String,
+    default: function genUUID() {
+      return uuid();
+    },
+  })
   _id: string;
 
   @Prop({
@@ -15,22 +18,25 @@ export class User {
     unique: true,
     type: String,
   })
-  email: string = '';
+  email = '';
 
   @Prop({
     required: true,
     type: String,
   })
-  password: string = '';
+  password = '';
 
   @Prop({
     type: [String],
     required: false,
     default: [RolesEnum.USER],
   })
-  roles: RolesEnum[] = [];
+  roles: RolesEnum[] = [RolesEnum.USER];
 }
 
 export type UserDocument = User & Document;
 
-export const UserSchema = SchemaFactory.createForClass(User).set('versionKey', false);
+export const UserSchema = SchemaFactory.createForClass(User).set(
+  'versionKey',
+  false,
+);

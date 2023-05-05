@@ -1,20 +1,20 @@
+import { SharedModule } from '@/shared/shared.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { SharedModule } from '@/shared/shared.module';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { DatabaseConfigService } from '@/database/database-config.service';
 import { ApiConfigService } from '@/shared/services/api-config.service';
 import { RedisModuleAsyncOptions } from '@liaoliaots/nestjs-redis/dist/redis/interfaces';
+import UserModule from '@/modules/user/user.module';
+import AuthModule from '@/modules/auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
+      useClass: DatabaseConfigService,
       imports: [SharedModule],
-      useFactory: (configService: DatabaseConfigService) =>
-        configService.config,
-      inject: [DatabaseConfigService],
     }),
     RedisModule.forRootAsync({
       useFactory: (configService: ApiConfigService) => ({
@@ -24,6 +24,8 @@ import { RedisModuleAsyncOptions } from '@liaoliaots/nestjs-redis/dist/redis/int
       }),
       inject: [ApiConfigService],
     } as RedisModuleAsyncOptions),
+    UserModule,
+    AuthModule,
   ],
 })
 export default class AppModule {}

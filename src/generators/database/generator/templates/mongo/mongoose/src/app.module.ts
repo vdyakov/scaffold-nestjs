@@ -8,11 +8,9 @@ import { DatabaseConfigService } from '@/database/database-config.service';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
+      useClass: DatabaseConfigService,
       imports: [SharedModule],
-      useFactory: (configService: DatabaseConfigService) =>
-        configService.config,
-      inject: [DatabaseConfigService],
-    })
+    }),
   ],
 })
 export default class AppModule {}

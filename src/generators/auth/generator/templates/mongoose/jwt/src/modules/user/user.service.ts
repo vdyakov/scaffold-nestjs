@@ -8,7 +8,7 @@ import UpdateUserDto from '@/modules/user/dtos/update-user.dto';
 
 @Injectable()
 export default class UserService {
-  constructor(private readonly userRepository: UserRepository) { }
+  constructor(private readonly userRepository: UserRepository) {}
 
   public async create(user: SignupDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -19,10 +19,7 @@ export default class UserService {
     });
   }
 
-  public async update(
-    id: string,
-    data: UpdateUserDto,
-  ): Promise<User | null> {
+  public async update(id: string, data: UpdateUserDto): Promise<User | null> {
     return this.userRepository.updateById(id, data);
   }
 

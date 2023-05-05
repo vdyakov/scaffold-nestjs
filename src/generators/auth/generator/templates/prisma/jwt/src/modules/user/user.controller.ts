@@ -9,11 +9,11 @@ import WrapResponseInterceptor from '@/interceptors/wrap-response.interceptor';
 @ApiTags('Users')
 @ApiBearerAuth()
 @UseInterceptors(WrapResponseInterceptor)
-@Controller()
+@Controller('user')
 export default class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('user')
+  @Get()
   @Auth()
   @Serialize(UsersResponseDto)
   async getAllUsers() {

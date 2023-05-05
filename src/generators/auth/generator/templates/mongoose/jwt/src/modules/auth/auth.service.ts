@@ -24,7 +24,7 @@ export default class AuthService {
     email: string,
     password: string,
   ): Promise<null | ValidateUserOutput> {
-    const user = await this.userRepository.findByEmail(email) as UserDocument;
+    const user = (await this.userRepository.findByEmail(email)) as UserDocument;
 
     if (!user) {
       return null;
@@ -55,10 +55,7 @@ export default class AuthService {
       }),
     ]);
 
-    await this.authRepository.addRefreshToken(
-      payload.email,
-      refreshToken,
-    );
+    await this.authRepository.addRefreshToken(payload.email, refreshToken);
 
     return {
       accessToken,
@@ -78,7 +75,10 @@ export default class AuthService {
     return this.authRepository.removeAllTokens();
   }
 
-  public async verifyToken(token: string, secret: string): Promise<DecodedUser | null> {
+  public async verifyToken(
+    token: string,
+    secret: string,
+  ): Promise<DecodedUser | null> {
     try {
       const result = await this.jwtService.verifyAsync(token, { secret });
 

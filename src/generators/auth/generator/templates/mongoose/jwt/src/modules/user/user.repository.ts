@@ -15,7 +15,10 @@ export default class UserRepository {
     return newUser.toJSON();
   }
 
-  public async updateById(id: string, data: UpdateUserDto): Promise<User | null> {
+  public async updateById(
+    id: string,
+    data: UpdateUserDto,
+  ): Promise<User | null> {
     return this.userModel.findByIdAndUpdate(id, { $set: data }).exec();
   }
 

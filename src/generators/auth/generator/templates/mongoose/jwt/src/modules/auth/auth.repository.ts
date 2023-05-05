@@ -14,7 +14,10 @@ export default class AuthRepository {
     this.redisClient = redisService.getClient();
   }
 
-  public async addRefreshToken(userEmail: string, refreshToken: string): Promise<void> {
+  public async addRefreshToken(
+    userEmail: string,
+    refreshToken: string,
+  ): Promise<void> {
     await this.redisClient.set(
       userEmail,
       refreshToken,
