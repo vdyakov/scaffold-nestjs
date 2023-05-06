@@ -25,8 +25,9 @@ services:
       - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD:-secret}
-      MYSQL_ROOT_USER: ${DATABASE_USERNAME:-test}
       MYSQL_DATABASE: ${DATABASE_NAME:-test}
+      MYSQL_USER: ${DATABASE_USERNAME:-test}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD:-secret}
 
   redis:
     image: redis:6

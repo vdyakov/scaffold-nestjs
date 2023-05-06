@@ -1,17 +1,31 @@
 services:
   api:
-    build:
-      dockerfile: Dockerfile
-      context: .
-      target: development
+    image: <%= projectName %>-app
     volumes:
       - .:/app
       - /app/node_modules
     env_file:
       - .env
-    command: npm run start:dev
     ports:
       - ${SERVER_PORT}:3000
+    command: npm run start:dev
+    depends_on:
+      - migration
+
+  migration:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    image: <%= projectName %>-app
+    command: sh -c "npm run build && npm run prisma:migrate:dev"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    links:
+      - mariadb
     depends_on:
       - mariadb
       - redis
@@ -25,8 +39,9 @@ services:
       - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD:-secret}
-      MYSQL_ROOT_USER: ${DATABASE_USERNAME:-test}
       MYSQL_DATABASE: ${DATABASE_NAME:-test}
+      MYSQL_USER: ${DATABASE_USERNAME:-test}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD:-secret}
 
   redis:
     image: redis:6

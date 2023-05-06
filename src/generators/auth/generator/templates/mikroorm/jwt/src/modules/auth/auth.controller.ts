@@ -32,7 +32,7 @@ import { ApiConfigService } from '@/shared/services/api-config.service';
 @ApiTags('Auth')
 @ApiExtraModels(JwtTokenDto)
 @UseInterceptors(WrapResponseInterceptor)
-@Controller()
+@Controller('auth')
 export default class AuthController {
   constructor(
     private readonly authService: AuthService,

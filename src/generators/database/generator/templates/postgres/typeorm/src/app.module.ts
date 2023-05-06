@@ -2,16 +2,14 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SharedModule } from '@/shared/shared.module';
-import { DatabaseConfigService } from '@/database/database-config.service';
+import { DatabaseFactoryService } from '@/database/database-factory.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
+      useClass: DatabaseFactoryService,
       imports: [SharedModule],
-      useFactory: (configService: DatabaseConfigService) =>
-        configService.config,
-      inject: [DatabaseConfigService],
     }),
   ],
 })
