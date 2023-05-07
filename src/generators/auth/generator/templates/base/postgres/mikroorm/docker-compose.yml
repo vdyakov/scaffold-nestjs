@@ -1,17 +1,31 @@
 services:
   api:
-    build:
-      dockerfile: Dockerfile
-      context: .
-      target: development
+    image: <%= projectName %>-app
     volumes:
       - .:/app
       - /app/node_modules
     env_file:
       - .env
-    command: npm run start:dev
     ports:
       - ${SERVER_PORT}:3000
+    command: npm run start:dev
+    depends_on:
+      - migration
+
+  migration:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    image: <%= projectName %>-app
+    command: npm run mikroorm:migration:migrate
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    links:
+      - postgres
     depends_on:
       - postgres
       - redis

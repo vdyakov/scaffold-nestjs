@@ -13,7 +13,7 @@ export abstract class AbstractPackageManager {
         interval: 120,
         frames: ['▹▹▹▹▹', '▸▹▹▹▹', '▹▸▹▹▹', '▹▹▸▹▹', '▹▹▹▸▹', '▹▹▹▹▸'],
       },
-      text: 'Installation in progress...',
+      text: 'Installation dependencies in progress...',
     });
 
     spinner.start();
@@ -29,8 +29,6 @@ export abstract class AbstractPackageManager {
       );
 
       spinner.succeed();
-
-      console.info('Dependencies successfully installed');
     } catch {
       spinner.fail();
 
