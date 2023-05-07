@@ -42,7 +42,7 @@ export default function renderTemplate(src: string, dest: string, config: object
     dest = path.resolve(path.dirname(dest), filename.replace(/^_/, '.'));
   }
 
-  if (['_gitignore', '_env'].includes(filename) && fs.existsSync(dest)) {
+  if (['_gitignore', '_env', 'schema.prisma'].includes(filename) && fs.existsSync(dest)) {
     const existing = fs.readFileSync(dest, 'utf8');
     const newFile = render(src, config);
 

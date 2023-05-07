@@ -1,0 +1,45 @@
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    command: npm run start:dev
+    ports:
+      - ${SERVER_PORT}:3000
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo:6.0
+    restart: always
+    volumes:
+      - mongo:/data/db
+    ports:
+      - 28017:27017
+    environment:
+      MONGO_INITDB_DATABASE: ${DATABASE_NAME:-test}
+    healthcheck:
+      test: |
+        test $$(mongosh --quiet --eval "try { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'mongo' }] }).ok } catch (_) { rs.status().ok }") -eq 1
+      interval: 10s
+      start_period: 30s
+    command: ["--bind_ip_all", "--replSet", "rs0"]
+
+  redis:
+    image: redis:6
+    restart: always
+    volumes:
+      - redis:/data
+    ports:
+      - 6379:6379
+
+volumes:
+  mongo:
+  redis:

@@ -33,9 +33,9 @@ export default class DatabaseQuestionnaire extends Questionnaire<DatabaseAnswers
         initial: 0,
       },
       {
-        name: 'odm',
+        name: 'orm',
         type: () => database === 'mongo' ? 'select' : null,
-        message: 'Select ODM:',
+        message: 'Select ORM:',
         choices: [
           { title: 'Mongoose', value: 'mongoose' },
           { title: 'Prisma', value: 'prisma' },

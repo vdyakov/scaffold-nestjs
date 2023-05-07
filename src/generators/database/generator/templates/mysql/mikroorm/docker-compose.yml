@@ -1,16 +1,31 @@
 services:
   api:
+    image: <%= projectName %>-app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    ports:
+      - ${SERVER_PORT}:3000
+    command: npm run start:dev
+    depends_on:
+      - migration
+
+  migration:
     build:
       dockerfile: Dockerfile
       context: .
       target: development
+    image: <%= projectName %>-app
+    command: npm run mikroorm:migration:migrate
     volumes:
       - .:/app
+      - /app/node_modules
     env_file:
       - .env
-    command: npm run start:dev
-    ports:
-      - ${SERVER_PORT}:3000
+    links:
+      - mariadb
     depends_on:
       - mariadb
 
@@ -18,9 +33,9 @@ services:
     image: mariadb:10.7
     restart: always
     volumes:
-      - data:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     ports:
-      - "3307:3306"
+      - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD:-secret}
       MYSQL_DATABASE: ${DATABASE_NAME:-test}
@@ -28,4 +43,4 @@ services:
       MYSQL_PASSWORD: ${DATABASE_PASSWORD:-secret}
 
 volumes:
-  data:
+  mariadb:

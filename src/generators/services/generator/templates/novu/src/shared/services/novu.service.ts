@@ -1,20 +1,20 @@
 import { Novu } from '@novu/node';
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import {
   ITriggerPayload,
   TriggerRecipientsPayload
 } from '@novu/node/build/main/lib/events/events.interface';
+import { ApiConfigService } from '@/shared/services/api-config.service';
 
 @Injectable()
 export class NovuService {
   private readonly novu: Novu;
 
   constructor(
-    public configService: ConfigService,
+    public configService: ApiConfigService,
   ) {
-    const apiKey: string = configService.get<string>('NOVU_API_KEY') || '';
-    const backendUrl: string|null = configService.get<string>('NOVU_API_URL') || null;
+    const apiKey: string = configService.getString('NOVU_API_KEY');
+    const backendUrl: string|null = configService.getString('NOVU_API_URL');
 
     this.novu = new Novu(apiKey, { backendUrl });
   }

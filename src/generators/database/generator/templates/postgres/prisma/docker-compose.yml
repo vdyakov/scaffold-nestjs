@@ -1,16 +1,31 @@
 services:
   api:
+    image: <%= projectName %>-app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    ports:
+      - ${SERVER_PORT}:3000
+    command: npm run start:dev
+    depends_on:
+      - migration
+
+  migration:
     build:
       dockerfile: Dockerfile
       context: .
       target: development
+    image: <%= projectName %>-app
+    command: sh -c "npm run build && npm run prisma:migrate:dev"
     volumes:
       - .:/app
+      - /app/node_modules
     env_file:
       - .env
-    command: npm run start:dev
-    ports:
-      - ${SERVER_PORT}:3000
+    links:
+      - postgres
     depends_on:
       - postgres
 
@@ -18,9 +33,9 @@ services:
     image: postgres:15.2
     restart: always
     volumes:
-      - data:/data/postgres
+      - postgres:/data/postgres
     ports:
-      - "5433:5432"
+      - 5433:5432
     environment:
       POSTGRES_DB: ${DATABASE_NAME:-test}
       POSTGRES_USER: ${DATABASE_USERNAME:-test}
@@ -28,4 +43,4 @@ services:
       PGDATA: /data/postgres
 
 volumes:
-  data:
+  postgres:

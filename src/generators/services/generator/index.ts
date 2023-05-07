@@ -15,7 +15,7 @@ export default class BaseGenerator extends Generator<ServicesAnswers> {
     await generatorSteps.install(answers);
   }
 
-  protected end() {
-    generatorSteps.end();
+  protected end(answers: ServicesAnswers) {
+    generatorSteps.end(answers);
   }
 }

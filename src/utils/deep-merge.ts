@@ -6,6 +6,10 @@ interface DeepObject {
 }
 
 function deepMerge(target: DeepObject, obj: DeepObject) {
+  if (Object.keys(target).length === 0) {
+    return obj;
+  }
+
   for (const key of Object.keys(obj)) {
     const oldVal = target[key] ?? {};
     const newVal = obj[key] ?? {};

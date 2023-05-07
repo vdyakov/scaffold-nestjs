@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, ValidationError } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ConfigService } from '@nestjs/config';
+import { ApiConfigService } from '@/shared/services/api-config.service';
 
-import AppModule from '@/modules/app.module';
+import AppModule from '@/app.module';
 
 import ValidationExceptions from '@/exceptions/validation.exceptions';
 
@@ -19,9 +19,12 @@ import {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(new ValidationPipe({
-    exceptionFactory: (errors: ValidationError[]) => new ValidationExceptions(errors),
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      exceptionFactory: (errors: ValidationError[]) =>
+        new ValidationExceptions(errors),
+    }),
+  );
 
   app.useGlobalFilters(
     new AllExceptionsFilter(),
@@ -32,8 +35,8 @@ async function bootstrap() {
     new ValidationExceptionsFilter(),
   );
 
-  const configService = app.get(ConfigService);
-  const port = configService.get<number>('SERVER_PORT') || 3000;
+  const configService = app.get(ApiConfigService);
+  const port = configService.getNumber('SERVER_PORT', 3000);
 
   const options = new DocumentBuilder()
     .setTitle('Api v1')
@@ -46,7 +49,9 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(port, async () => {
-    console.log(`The server is running on ${port} port: http://localhost:${port}/api`);
+    console.log(
+      `The server is running on ${port} port: http://localhost:${port}/api`,
+    );
   });
 }
 

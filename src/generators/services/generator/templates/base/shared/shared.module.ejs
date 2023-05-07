@@ -1,0 +1,17 @@
+import type { Provider } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
+
+import { ApiConfigService } from '@/shared/services/api-config.service';<% providerImports.forEach(function(providerImport) { %>
+<%-`import { ${providerImport.serviceName} } from '@/shared/services/${providerImport.fileName}';`%><%});%>
+
+const providers: Provider[] = [
+  ApiConfigService,<% providers.forEach(function(provider) { %>
+  <%-provider%>,<%});%>
+];
+
+@Global()
+@Module({
+  providers,
+  exports: [...providers],
+})
+export class SharedModule {}

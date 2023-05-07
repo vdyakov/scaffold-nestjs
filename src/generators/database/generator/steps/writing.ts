@@ -18,11 +18,10 @@ export default function (answers: DatabaseAnswers) {
     projectName,
     database,
     orm,
-    odm,
   } = answers;
 
   renderTemplate(
-    templatePath(database, orm ?? odm ?? ''),
+    templatePath(database, orm ?? ''),
     destinationPath(projectName),
     answers,
   );

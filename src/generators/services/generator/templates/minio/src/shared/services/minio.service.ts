@@ -1,6 +1,6 @@
 import * as Minio from 'minio';
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ApiConfigService } from '@/shared/services/api-config.service';
 
 @Injectable()
 export class MinioService {
@@ -8,13 +8,13 @@ export class MinioService {
   private readonly bucketName: string;
 
   constructor(
-    public configService: ConfigService,
+    public configService: ApiConfigService,
   ) {
-    const endPoint = this.configService.get<string>('MINIO_ENDPOINT') || '';
-    const port = Number(this.configService.get<number>('MINIO_PORT') || 9000);
-    const useSSL = this.configService.get<string>('MINIO_USE_SSL') === 'true';
-    const accessKey = this.configService.get<string>('MINIO_ACCESS_KEY') || '';
-    const secretKey = this.configService.get<string>('MINIO_SECRET_KEY') || '';
+    const endPoint = configService.getString('MINIO_ENDPOINT');
+    const port = configService.getNumber('MINIO_PORT', 9000);
+    const useSSL = configService.getBoolean('MINIO_USE_SSL');
+    const accessKey = configService.getString('MINIO_ACCESS_KEY');
+    const secretKey = configService.getString('MINIO_SECRET_KEY');
 
     this.minio = new Minio.Client({
       endPoint,
@@ -24,7 +24,7 @@ export class MinioService {
       secretKey,
     });
 
-    this.bucketName = this.configService.get<string>('MINIO_BUCKET_NAME') || '';
+    this.bucketName = configService.getString('MINIO_BUCKET_NAME');
   }
 
   async createBucketIfNotExists() {
