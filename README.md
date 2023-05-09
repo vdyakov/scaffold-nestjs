@@ -1,4 +1,4 @@
-# Nest.js generator
+# Scaffold Nest.js
 
 ## Description
 

@@ -1,7 +1,7 @@
 {
-  "name": "nestjs-generator",
+  "name": "scaffold-nestjs",
   "version": "0.1.0",
-  "description": "Generator for Nest.js",
+  "description": "Boilerplate generator for Nest.js",
   "keywords": [
     "nest.js",
     "node.js",
@@ -13,13 +13,13 @@
     "typeorm",
     "mongoose"
   ],
-  "homepage": "https://github.com/vdyakov/nestjs-generator#readme",
+  "homepage": "https://github.com/vdyakov/scaffold-nestjs#readme",
   "bugs": {
-    "url": "https://github.com/vdyakov/nestjs-generator/issues"
+    "url": "https://github.com/vdyakov/scaffold-nestjs/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vdyakov/nestjs-generator.git"
+    "url": "git+https://github.com/vdyakov/scaffold-nestjs.git"
   },
   "license": "MIT",
   "author": "Vyacheslav Diakov <vyacheslav08071996@gmail.com>",
