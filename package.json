@@ -2,37 +2,41 @@
   "name": "nestjs-generator",
   "version": "0.1.0",
   "description": "Generator for Nest.js",
-  "type": "module",
   "keywords": [
     "nest.js",
     "node.js",
     "scaffold",
     "generator",
-    "boilerplate"
+    "boilerplate",
+    "mikro-orm",
+    "prisma",
+    "typeorm",
+    "mongoose"
   ],
-  "bin": {
-    "nestjs-generator": "dist/index.js"
+  "homepage": "https://github.com/vdyakov/nestjs-generator#readme",
+  "bugs": {
+    "url": "https://github.com/vdyakov/nestjs-generator/issues"
   },
-  "main": "index.ts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "clean": "rimraf dist/",
-    "copy-files": "copyfiles -a -u 1 \"src/generators/**/generator/templates/**/*\" dist/src/",
-    "build": "npm run clean && tsc && tsc-alias && npm run copy-files",
-    "generate": "node dist/index.js"
-  },
-  "author": "Vyacheslav Diakov <vyacheslav08071996@gmail.com>",
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vdyakov/nestjs-generator.git"
   },
-  "bugs": {
-    "url": "https://github.com/vdyakov/nestjs-generator/issues"
+  "license": "MIT",
+  "author": "Vyacheslav Diakov <vyacheslav08071996@gmail.com>",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "nestjs-generator": "dist/index.js"
   },
-  "homepage": "https://github.com/vdyakov/nestjs-generator#readme",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsc && tsc-alias && npm run copy-files",
+    "clean": "rimraf dist/",
+    "copy-files": "copyfiles -a -u 1 \"src/generators/**/generator/templates/**/*\" dist/src/",
+    "generate": "node dist/index.js"
+  },
   "dependencies": {
     "chalk": "^5.2.0",
     "ejs": "^3.1.9",
@@ -45,8 +49,8 @@
     "@types/minimist": "^1.2.2",
     "@types/node": "^18.15.11",
     "@types/prompts": "^2.4.4",
-    "prettier": "^2.8.7",
     "copyfiles": "^2.4.1",
+    "prettier": "^2.8.7",
     "rimraf": "^4.4.1",
     "tsc-alias": "^1.8.5",
     "typescript": "^5.0.4"
