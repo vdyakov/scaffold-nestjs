@@ -1,0 +1,46 @@
+services:
+  api:
+    image: <%= projectName %>-app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    ports:
+      - ${SERVER_PORT}:3000
+    command: npm run start:dev
+    depends_on:
+      - migration
+
+  migration:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    image: <%= projectName %>-app
+    command: sh -c "npm run build && npm run typeorm:migration:migrate"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15.2
+    restart: always
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-test}
+      POSTGRES_USER: ${DATABASE_USERNAME:-test}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-secret}
+      PGDATA: /data/postgres
+
+volumes:
+  postgres:

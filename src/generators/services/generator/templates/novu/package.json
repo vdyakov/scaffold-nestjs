@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@novu/node": "^0.14.0"
+  }
+}

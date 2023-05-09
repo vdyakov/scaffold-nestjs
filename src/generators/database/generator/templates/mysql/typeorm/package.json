@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "typeorm": "typeorm-ts-node-commonjs",
+    "typeorm:migration:migrate": "npm run typeorm migration:run -- -d ./src/database/database.config.ts",
+    "typeorm:migration:generate": "npm run typeorm -- -d ./src/database/database.config.ts migration:generate ./src/database/migrations/$npm_config_name",
+    "typeorm:migration:create": "npm run typeorm -- migration:create ./src/database/migrations/$npm_config_name",
+    "typeorm:migration:revert": "npm run typeorm -- -d ./src/database/database.config.ts migration:revert"
+  },
+  "dependencies": {
+    "@nestjs/typeorm": "^9.0.1",
+    "mysql2": "^3.2.3",
+    "typeorm": "^0.3.15"
+  }
+}

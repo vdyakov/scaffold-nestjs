@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate:dev": "npx prisma migrate dev",
+    "prisma:migrate:deploy": "npx prisma migrate deploy"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.13.0"
+  },
+  "devDependencies": {
+    "prisma": "^4.13.0"
+  },
+  "prisma": {
+    "schema": "src/database/schema.prisma"
+  }
+}
