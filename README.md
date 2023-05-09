@@ -19,7 +19,7 @@ This generator will help you create a Nest.js application. You just need to answ
 First, generate your new project:
 
 ```bash
-npx nestjs-generator
+npx scaffold-nestjs
 ```
 
 Run your generated application:
