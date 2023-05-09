@@ -1,6 +1,6 @@
 {
   "name": "scaffold-nestjs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Boilerplate generator for Nest.js",
   "keywords": [
     "nest.js",
@@ -26,7 +26,7 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "nestjs-generator": "dist/index.js"
+    "scaffold-nestjs": "dist/index.js"
   },
   "files": [
     "dist"
