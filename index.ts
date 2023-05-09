@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import BaseModule from '@/generators/base/index.js';
 import AuthModule from '@/generators/auth/index.js';
 import DatabaseModule from '@/generators/database/index.js';
