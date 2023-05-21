@@ -1,25 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import KeycloakClient from '@keycloak/keycloak-admin-client';
 import UserRepresentation from '@keycloak/keycloak-admin-client/lib/defs/userRepresentation';
 import { ApiConfigService } from '@/shared/services/api-config.service';
+import KeycloakAdminClient from '@keycloak/keycloak-admin-client';
+import { dynamicImport } from '@/shared/helpers/dynamic-import';
 
 @Injectable()
 export class KeycloakService {
-  private readonly keycloak: KeycloakClient;
+  private keycloak: KeycloakAdminClient;
 
-  async constructor(
+  constructor(
     public configService: ApiConfigService,
   ) {
-    const baseUrl: string = configService.getString('KEYCLOAK_URL');
-    const realmName: string = configService.getString('KEYCLOAK_REALM');
-    const clientId: string = configService.getString('KEYCLOAK_CLIENT_ID');
-    const username: string = configService.getString('KEYCLOAK_API_USERNAME');
-    const password: string = configService.getString('KEYCLOAK_API_PASSWORD');
+    this.initialize();
+  }
+
+  async initialize(): Promise<void> {
+    const baseUrl: string = this.configService.getString('KEYCLOAK_URL');
+    const realmName: string = this.configService.getString('KEYCLOAK_REALM');
+
+    const KeycloakClient = (
+      await dynamicImport('@keycloak/keycloak-admin-client')
+    ).default;
 
     this.keycloak = new KeycloakClient({
       baseUrl,
       realmName,
     });
+
+    await this.auth();
+  }
+
+  async auth(): Promise<void> {
+    const clientId: string = this.configService.getString('KEYCLOAK_CLIENT_ID');
+    const username: string = this.configService.getString('KEYCLOAK_API_USERNAME');
+    const password: string = this.configService.getString('KEYCLOAK_API_PASSWORD');
 
     await this.keycloak.auth({
       username,
@@ -35,7 +49,7 @@ export class KeycloakService {
       email,
     });
 
-    if (!!users['error'] || [] === users) {
+    if (!!users['error'] || users.length === 0) {
       return null;
     }
 
