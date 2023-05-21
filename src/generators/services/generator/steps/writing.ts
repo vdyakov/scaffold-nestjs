@@ -26,7 +26,7 @@ export default function (answers: ServicesAnswers) {
   const providers = [];
 
   if (needKeycloak) {
-    providerImports.push({ serviceName: 'KeycloakService', fileName: 'keycloak.service.ts' });
+    providerImports.push({ serviceName: 'KeycloakService', fileName: 'keycloak.service' });
     providers.push('KeycloakService');
 
     renderTemplate(
@@ -37,7 +37,7 @@ export default function (answers: ServicesAnswers) {
   }
 
   if (needNovu) {
-    providerImports.push({ serviceName: 'NovuService', fileName: 'novu.service.ts' });
+    providerImports.push({ serviceName: 'NovuService', fileName: 'novu.service' });
     providers.push('NovuService');
 
     renderTemplate(
@@ -48,7 +48,7 @@ export default function (answers: ServicesAnswers) {
   }
 
   if (needMinio) {
-    providerImports.push({ serviceName: 'MinioService', fileName: 'minio.service.ts' });
+    providerImports.push({ serviceName: 'MinioService', fileName: 'minio.service' });
     providers.push('MinioService');
 
     renderTemplate(
