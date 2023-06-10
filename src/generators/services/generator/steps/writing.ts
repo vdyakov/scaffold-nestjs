@@ -16,11 +16,13 @@ function destinationPath(projectName: string, ...dest: string[]) {
 
 export default function (answers: ServicesAnswers) {
   const {
-    projectName,
-    needKeycloak,
-    needNovu,
-    needMinio,
+    projectName = 'nest-js-project',
+    services = [],
   } = answers;
+
+  const needKeycloak = services.includes('keycloak');
+  const needMinio = services.includes('minio');
+  const needNovu = services.includes('novu');
 
   const providerImports = [];
   const providers = [];

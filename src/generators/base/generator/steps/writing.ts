@@ -17,7 +17,7 @@ function destinationPath(projectName: string, ...dest: string[]) {
 
 export default function (answers: CommonAnswers) {
   const {
-    projectName,
+    projectName = 'nest-js-project',
     packageName = projectName,
     shouldOverwrite = false,
   } = answers;

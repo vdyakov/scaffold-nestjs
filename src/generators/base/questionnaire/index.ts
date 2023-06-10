@@ -14,8 +14,10 @@ export default class BaseQuestionnaire extends Questionnaire<CommonAnswers> {
     });
 
     let targetDir: string = argv._[0];
-    const forceOverwrite = argv.force;
-    const defaultProjectName = !targetDir ? 'nest-js-project' : targetDir;
+
+    const defaultProjectName = !targetDir || targetDir === '.'
+      ? 'nest-js-project'
+      : targetDir;
 
     return [
       {
@@ -27,7 +29,7 @@ export default class BaseQuestionnaire extends Questionnaire<CommonAnswers> {
       },
       {
         name: 'shouldOverwrite',
-        type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'confirm'),
+        type: () => canSkipEmptying(targetDir) ? null : 'confirm',
         message: () => {
           const dirForPrompt = targetDir === '.'
             ? 'Current directory'

@@ -1,8 +1,13 @@
+import { Options } from '@/lib/options-managers/types';
+
 export default abstract class Generator<T = {}> {
-  async generate(answers: T): Promise<void> {
+  async generate(answers: T, args: Options): Promise<void> {
     await this.start(answers);
     await this.writing(answers);
-    await this.install(answers);
+
+    if (!args.skipInstall)
+      await this.install(answers);
+
     await this.end(answers);
   }
 

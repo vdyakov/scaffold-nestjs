@@ -6,28 +6,16 @@ export default class DatabaseQuestionnaire extends Questionnaire<ServicesAnswers
   protected get questions(): PromptObject[] {
     return [
       {
-        name: 'needKeycloak',
-        type: 'toggle',
-        message: 'Add Keycloak service?',
-        initial: false,
-        active: 'yes',
-        inactive: 'no'
-      },
-      {
-        name: 'needMinio',
-        type: 'toggle',
-        message: 'Add MinIO service?',
-        initial: false,
-        active: 'yes',
-        inactive: 'no'
-      },
-      {
-        name: 'needNovu',
-        type: 'toggle',
-        message: 'Add Novu service?',
-        initial: false,
-        active: 'yes',
-        inactive: 'no'
+        type: 'multiselect',
+        name: 'services',
+        message: 'Select additional services:',
+        choices: [
+          { title: 'Keycloak', value: 'keycloak' },
+          { title: 'MinIO', value: 'minio' },
+          { title: 'Novu', value: 'novu' },
+        ],
+        instructions: false,
+        hint: '- Space to select. Return to submit'
       },
     ];
   }

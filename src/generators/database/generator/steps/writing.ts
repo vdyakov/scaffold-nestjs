@@ -15,9 +15,9 @@ function destinationPath(projectName: string, ...dest: string[]) {
 
 export default function (answers: DatabaseAnswers) {
   const {
-    projectName,
-    database,
-    orm,
+    projectName = 'nest-js-project',
+    database = 'mongo',
+    orm = 'prisma',
   } = answers;
 
   renderTemplate(
