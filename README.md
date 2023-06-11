@@ -31,17 +31,27 @@ docker-compose up -d
 
 ## Options
 
-| Options          | Description                                                                            | Example                                            |
-|------------------|----------------------------------------------------------------------------------------|----------------------------------------------------|
-| skip-install     | This option disables installation of dependencies after code generation.               | npx scaffold-nestjs --skip-install                 |
-| no-interactive   | This option disables answering questions in interactive mode.                          | npx scaffold-nestjs --no-interactive               |
-| project          | This option allows you to set the name of the project (default is nest-js-project).    | npx scaffold-nestjs --project-name=nest-js-project |
-| should-overwrite | This option allows you to overwrite an existing folder.                                | npx scaffold-nestjs --should-overwrite             |
-| database         | This option allows you to set the database (mongo, mysql, postgres).                   | npx scaffold-nestjs --database=mongo               |
-| orm              | This option allows you to set the orm (mongoose, prisma, mikroorm, typeorm).           | npx scaffold-nestjs --orm=mongoose                 |
-| no-need-auth     | This option disables the generation of authorization components.                       | npx scaffold-nestjs --no-need-auth                 |
-| auth             | This option allows you to set the authorization option (jwt).                          | npx scaffold-nestjs --auth=jwt                     |
-| services         | This option allows you to add various services to the project (keycloak, minio, novu). | npx scaffold-nestjs --services=keycloak,minio      |
+| Options          | Description                                                                                                                                                                  | Example                                            |
+|------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
+| skip-install     | This option disables installation of dependencies after code generation.                                                                                                     | npx scaffold-nestjs --skip-install                 |
+| no-interactive   | This option disables answering questions in interactive mode.                                                                                                                | npx scaffold-nestjs --no-interactive               |
+| project          | This option allows you to set the name of the project (default is nest-js-project).                                                                                          | npx scaffold-nestjs --project-name=nest-js-project |
+| should-overwrite | This option allows you to overwrite an existing folder.                                                                                                                      | npx scaffold-nestjs --should-overwrite             |
+| database         | This option allows you to set the database.<br/>Allowed values: `mongo`, `mysql` or `postgres`.                                                                              | npx scaffold-nestjs --database=mongo               |
+| orm              | This option allows you to set the orm.<br/>Allowed values for MongoDB: `mongoose` or `prisma`.<br/>Allowed values for MySql and Postgres: `prisma`, `mikroorm` or `typeorm`. | npx scaffold-nestjs --orm=mongoose                 |
+| no-need-auth     | This option disables the generation of authorization components.                                                                                                             | npx scaffold-nestjs --no-need-auth                 |
+| auth             | This option allows you to set the authorization option.<br/>Allowed values: `jwt`.                                                                                           | npx scaffold-nestjs --auth=jwt                     |
+| services         | This option allows you to add various services to the project.<br/>Allowed values: `keycloak`, `minio`, `novu`.                                                              | npx scaffold-nestjs --services=keycloak,minio      |
+
+For example:
+```bash
+npx scaffold-nestjs --no-interactive \
+  --should-overwrite \
+  --project-name=nest-js-project \
+  --database=mongo \
+  --orm=mongoose \
+  --services=keycloak,novu
+```
 
 ## App skeleton
 
