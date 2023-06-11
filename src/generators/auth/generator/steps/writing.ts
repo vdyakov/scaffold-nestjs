@@ -15,10 +15,10 @@ function destinationPath(projectName: string, ...dest: string[]) {
 
 export default function (answers: AuthAnswers) {
   const {
-    projectName,
+    projectName = 'nest-js-project',
     needAuth = true,
-    orm = '',
-    database = '',
+    orm = 'prisma',
+    database = 'mongo',
     auth = 'jwt',
   } = answers;
 
