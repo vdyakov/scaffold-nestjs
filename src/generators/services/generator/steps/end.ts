@@ -6,6 +6,6 @@ export default function (answers: ServicesAnswers) {
 
   console.error(`  ${chalk.green(`1. cd ${answers.projectName}`)}`);
   console.error(`  ${chalk.green(`2. check .env file`)}`);
-  console.error(`  ${chalk.green(`3. docker-compose up -d`)}`);
-  console.error(`  ${chalk.green(`4. http://localhost:3000`)}`);
+  console.error(`  ${chalk.green(`3. docker-compose up -d --build`)}`);
+  console.error(`  ${chalk.green(`4. http://localhost:3000/api`)}`);
 };

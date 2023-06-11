@@ -1,6 +1,6 @@
 {
   "name": "scaffold-nestjs",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Boilerplate generator for Nest.js",
   "keywords": [
     "nest.js",

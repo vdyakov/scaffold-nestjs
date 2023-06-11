@@ -1,17 +1,29 @@
 import ModuleCollector from '@/lib/collectors/module-collector.js';
+import OptionsManager from '@/lib/options-managers/options-manager.js';
+import { Options } from '@/lib/options-managers/types';
 
 export default class ModuleCollectorHandler {
-  private answers: object = [];
+  public async handle(moduleCollector: ModuleCollector, argvManager: OptionsManager) {
+    const options: Options = argvManager.options;
 
-  public async handle(moduleCollector: ModuleCollector) {
-    for (const questionnaire of moduleCollector.questionnaires()) {
-      const answers = await questionnaire.prompt();
-
-      this.answers = { ...this.answers, ...answers };
-    }
+    const answers = false === options.interactive
+      ? options
+      : await this.getAnswers(moduleCollector, options);
 
     for (const generator of moduleCollector.generators()) {
-      await generator.generate(this.answers);
+      await generator.generate(answers, options);
     }
+  }
+
+  private async getAnswers(moduleCollector: ModuleCollector, options: Options) {
+    let allAnswers = {};
+
+    for (const questionnaire of moduleCollector.questionnaires()) {
+      const answers = await questionnaire.prompt(options);
+
+      allAnswers = { ...allAnswers, ...answers };
+    }
+
+    return allAnswers;
   }
 }
