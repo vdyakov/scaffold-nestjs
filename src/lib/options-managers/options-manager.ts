@@ -1,6 +1,7 @@
 import minimist from 'minimist';
 import { kebabCaseToCamelcase } from '@/utils/formatter.js';
-import { Options } from '@/lib/options-managers/types';
+import ZodValidator from '@/lib/validators/zod-validator.js';
+import { Options, OptionsValidator } from '@/lib/options-managers/types.js';
 
 export default class OptionsManager {
   private _options: Options = { _: [] };
@@ -11,14 +12,36 @@ export default class OptionsManager {
       boolean: true,
     });
 
-    Object.keys(argv).forEach((key: string) => {
-      const preparedKey: string = kebabCaseToCamelcase(key);
+    const preparedOptions = this.prepareArgs(argv);
 
-      this._options[preparedKey] = argv[key];
-    });
+    const optionsValidator = new ZodValidator<minimist.ParsedArgs, Options>(OptionsValidator);
+
+    const result = optionsValidator.validate(preparedOptions);
+
+    if (!result.success) {
+      throw result.errors;
+    }
+
+    this._options = result.data ?? this._options;
   }
 
   public get options(): Options {
     return this._options;
+  }
+
+  private prepareArgs(argv: minimist.ParsedArgs): minimist.ParsedArgs {
+    const args: minimist.ParsedArgs = {} as minimist.ParsedArgs;
+
+    Object.keys(argv).forEach((key: string) => {
+      const preparedKey: string = kebabCaseToCamelcase(key);
+
+      args[preparedKey] = argv[key];
+    });
+
+    if (false === args.interactive && !args.projectName) {
+      args.projectName = 'nest-js-project';
+    }
+
+    return args;
   }
 }
