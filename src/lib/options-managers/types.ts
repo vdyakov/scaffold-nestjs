@@ -1,3 +1,5 @@
+import * as z from 'zod';
+
 export enum DatabaseValue {
   MongoDB = 'mongo',
   MySql = 'mysql',
@@ -21,17 +23,17 @@ export enum ServicesValue {
   Novu = 'novu',
 }
 
-export interface Options {
-  _: string[],
-  skipInstall?: boolean,
-  interactive?: boolean,
-  projectName?: string,
-  shouldOverwrite?: boolean,
-  database?: DatabaseValue,
-  orm?: OrmValue,
-  needAuth?: boolean,
-  auth?: AuthValue,
-  services?: ServicesValue[],
+export const OptionsObject = z.object({
+  _: z.string().array(),
+  skipInstall: z.boolean().optional(),
+  interactive: z.boolean().optional(),
+  projectName: z.string().optional(),
+  shouldOverwrite: z.boolean().optional(),
+  database: z.nativeEnum(DatabaseValue).optional(),
+  orm: z.nativeEnum(OrmValue).optional(),
+  needAuth: z.boolean().optional(),
+  auth: z.nativeEnum(AuthValue).optional(),
+  services: z.nativeEnum(ServicesValue).array().optional(),
+});
 
-  [key: string]: string | boolean | string[] | undefined,
-}
+export type Options = z.infer<typeof OptionsObject>;
