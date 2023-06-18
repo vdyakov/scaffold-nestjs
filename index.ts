@@ -2,14 +2,17 @@
 
 import BaseModule from '@/generators/base/index.js';
 import AuthModule from '@/generators/auth/index.js';
+import ZodValidator from '@/lib/validators/zod-validator.js';
 import DatabaseModule from '@/generators/database/index.js';
 import ServicesModule from '@/generators/services/index.js';
+import { OptionsObject } from '@/lib/options-managers/types.js';
 import ModuleCollector from '@/lib/collectors/module-collector.js';
 import OptionsManager from '@/lib/options-managers/options-manager.js';
 import ModuleCollectorHandler from '@/lib/collectors/module-collector-handler.js';
 
 async function init() {
-  const options = new OptionsManager();
+  const optionsValidator = new ZodValidator(OptionsObject);
+  const options = new OptionsManager(optionsValidator);
   const collector = new ModuleCollector();
   const collectorHandler = new ModuleCollectorHandler();
 
