@@ -1,12 +1,12 @@
 import { SomeZodObject } from 'zod';
 import { Validator, ValidatorResponse } from '@/lib/validators/types';
 
-export default class ZodValidator<V, R> implements Validator<V, R> {
+export default class ZodValidator implements Validator {
   constructor(
     private readonly zodObject: SomeZodObject,
   ) {}
 
-  validate(options: V): ValidatorResponse<R> {
+  validate<V, R>(options: V): ValidatorResponse<R> {
     const result = this.zodObject.safeParse(options);
 
     if (!result.success) {

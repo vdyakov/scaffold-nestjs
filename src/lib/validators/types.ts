@@ -4,6 +4,6 @@ export interface ValidatorResponse<T = {}> {
   data?: T,
 }
 
-export interface Validator<T = {}, R = {}> {
-  validate(value: T): ValidatorResponse<R>,
+export interface Validator {
+  validate<T, R>(value: T): ValidatorResponse<R>,
 }

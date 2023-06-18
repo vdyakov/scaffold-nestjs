@@ -23,7 +23,7 @@ export enum ServicesValue {
   Novu = 'novu',
 }
 
-export const OptionsValidator = z.object({
+export const OptionsObject = z.object({
   _: z.string().array(),
   skipInstall: z.boolean().optional(),
   interactive: z.boolean().optional(),
@@ -36,4 +36,4 @@ export const OptionsValidator = z.object({
   services: z.nativeEnum(ServicesValue).array().optional(),
 });
 
-export type Options = z.infer<typeof OptionsValidator>;
+export type Options = z.infer<typeof OptionsObject>;

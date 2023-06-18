@@ -1,12 +1,14 @@
-import minimist from 'minimist';
+import minimist, { ParsedArgs } from 'minimist';
+import { Validator } from '@/lib/validators/types';
+import { Options } from '@/lib/options-managers/types.js';
 import { kebabCaseToCamelcase } from '@/utils/formatter.js';
-import ZodValidator from '@/lib/validators/zod-validator.js';
-import { Options, OptionsValidator } from '@/lib/options-managers/types.js';
 
 export default class OptionsManager {
   private _options: Options = { _: [] };
 
-  constructor() {
+  constructor(
+    private readonly optionsValidator: Validator,
+  ) {
     const argv = minimist(process.argv.slice(2), {
       string: ['_'],
       boolean: true,
@@ -14,9 +16,7 @@ export default class OptionsManager {
 
     const preparedOptions = this.prepareArgs(argv);
 
-    const optionsValidator = new ZodValidator<minimist.ParsedArgs, Options>(OptionsValidator);
-
-    const result = optionsValidator.validate(preparedOptions);
+    const result = this.optionsValidator.validate<ParsedArgs, Options>(preparedOptions);
 
     if (!result.success) {
       throw result.errors;
